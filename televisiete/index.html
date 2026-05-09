@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Televisiete Guatemala</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+    }
+
+    video {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <video id="video" autoplay controls playsinline></video>
+
+  <script>
+    const video = document.getElementById("video");
+
+    video.src = "https://d2qsan2ut81n2k.cloudfront.net/live/ce4f4915-0383-4e38-834b-6aca224d028e/medialist_5900814650867226228_hls.m3u8";
+
+    async function startPlayback() {
+      try {
+        video.muted = false;
+        await video.play();
+      } catch (error) {}
+
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (error) {}
+    }
+
+    window.addEventListener("load", function () {
+      video.play().catch(function () {});
+    });
+
+    document.addEventListener("click", startPlayback);
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        startPlayback();
+      }
+    });
+  </script>
+</body>
+</html>
