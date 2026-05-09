@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Canal 3 Guatemala</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+    }
+
+    video {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <video id="video" autoplay controls playsinline></video>
+
+  <script>
+    const video = document.getElementById("video");
+
+    video.src = "https://d2qsan2ut81n2k.cloudfront.net/live/6b4f0a21-94d5-4fb6-9742-0f78923723cd/medialist_5900814650867226228_hls.m3u8";
+
+    async function startPlayback() {
+      try {
+        video.muted = false;
+        await video.play();
+      } catch (error) {}
+
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (error) {}
+    }
+
+    window.addEventListener("load", function () {
+      video.play().catch(function () {});
+    });
+
+    document.addEventListener("click", startPlayback);
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        startPlayback();
+      }
+    });
+  </script>
+</body>
+</html>
