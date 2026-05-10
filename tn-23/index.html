@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>TN 23 Guatemala</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-
   <style>
     html, body {
       margin: 0;
@@ -33,30 +31,7 @@
   <script>
     const video = document.getElementById("video");
 
-    const streamUrl = "https://d2qsan2ut81n2k.cloudfront.net/live/0fa8c94f-fc47-466d-beda-8fc43bf963d7/medialist_5900814650867226228_hls.m3u8";
-
-    function loadVideo() {
-      if (Hls.isSupported()) {
-        const hls = new Hls({
-          enableWorker: true,
-          lowLatencyMode: true
-        });
-
-        hls.loadSource(streamUrl);
-        hls.attachMedia(video);
-
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          video.play().catch(function () {});
-        });
-      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = streamUrl;
-        video.addEventListener("loadedmetadata", function () {
-          video.play().catch(function () {});
-        });
-      } else {
-        video.src = streamUrl;
-      }
-    }
+    video.src = "https://d2qsan2ut81n2k.cloudfront.net/live/0fa8c94f-fc47-466d-beda-8fc43bf963d7/medialist_5900814650867226228_hls.m3u8";
 
     async function startPlayback() {
       try {
@@ -71,7 +46,9 @@
       } catch (error) {}
     }
 
-    window.addEventListener("load", loadVideo);
+    window.addEventListener("load", function () {
+      video.play().catch(function () {});
+    });
 
     document.addEventListener("click", startPlayback);
     document.addEventListener("keydown", function (event) {
