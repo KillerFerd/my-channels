@@ -12,7 +12,6 @@
       height: 100%;
       background: black;
       overflow: hidden;
-      font-family: Arial, sans-serif;
     }
 
     iframe {
@@ -23,109 +22,16 @@
       border: none;
       background: black;
     }
-
-    .hint {
-      position: fixed;
-      right: 12px;
-      bottom: 12px;
-      z-index: 20;
-      color: white;
-      background: rgba(0, 0, 0, 0.65);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      opacity: 0.75;
-      pointer-events: none;
-    }
-
-    .hidden {
-      display: none;
-    }
   </style>
 </head>
 
 <body>
   <iframe
-    id="playerFrame"
     src="https://dlhd.pk/watch/stream-131.php"
     title="Telemundo"
     allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
     allowfullscreen
     loading="eager">
   </iframe>
-
-  <div id="hint" class="hint">
-    OK / Enter para enfocar o pantalla completa
-  </div>
-
-  <script>
-    const iframe = document.getElementById("playerFrame");
-    const hint = document.getElementById("hint");
-
-    function focusPlayer() {
-      try {
-        iframe.focus();
-      } catch (error) {}
-
-      try {
-        window.focus();
-      } catch (error) {}
-    }
-
-    async function goFullscreen() {
-      try {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-        }
-      } catch (error) {}
-    }
-
-    function userAction() {
-      focusPlayer();
-      goFullscreen();
-
-      setTimeout(function () {
-        hint.classList.add("hidden");
-      }, 1500);
-    }
-
-    window.addEventListener("load", function () {
-      focusPlayer();
-
-      setTimeout(focusPlayer, 500);
-      setTimeout(focusPlayer, 1500);
-
-      setTimeout(function () {
-        hint.classList.add("hidden");
-      }, 6000);
-    });
-
-    document.addEventListener("click", userAction);
-
-    document.addEventListener("dblclick", async function () {
-      try {
-        if (!document.fullscreenElement) {
-          await document.documentElement.requestFullscreen();
-        } else {
-          await document.exitFullscreen();
-        }
-      } catch (error) {}
-    });
-
-    document.addEventListener("keydown", function (event) {
-      if (
-        event.key === "Enter" ||
-        event.key === " " ||
-        event.key === "Select" ||
-        event.key === "MediaPlayPause" ||
-        event.key === "ArrowUp" ||
-        event.key === "ArrowDown" ||
-        event.key === "ArrowLeft" ||
-        event.key === "ArrowRight"
-      ) {
-        userAction();
-      }
-    });
-  </script>
 </body>
 </html>
